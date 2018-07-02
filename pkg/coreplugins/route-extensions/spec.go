@@ -16,8 +16,9 @@ type RouteExtensionSpec struct {
 	Timeout     time.Duration `json:"timeout,omitempty"`
 	HostRewrite string        `json:"host_rewrite,omitempty"`
 
-	Cors *CorsPolicy `json:"cors",omitempty`
-	//TODO: support RateLimit
+	Cors *CorsPolicy `json:"cors,omitempty"`
+
+	HashPolicy *HashPolicy `json:"hash_policy,omitempty"`
 }
 
 type HeaderValue struct {
@@ -27,12 +28,18 @@ type HeaderValue struct {
 }
 
 type CorsPolicy struct {
-	AllowOrigin      []string      `json:"allow_origin",omitempty`
-	AllowMethods     string        `json:"allow_methods",omitempty`
-	AllowHeaders     string        `json:"allow_headers",omitempty`
-	ExposeHeaders    string        `json:"expose_headers",omitempty`
-	MaxAge           time.Duration `json:"max_age",omitempty`
-	AllowCredentials bool          `json:"allow_credentials",omitempty`
+	AllowOrigin      []string      `json:"allow_origin,omitempty"`
+	AllowMethods     string        `json:"allow_methods,omitempty"`
+	AllowHeaders     string        `json:"allow_headers,omitempty"`
+	ExposeHeaders    string        `json:"expose_headers,omitempty"`
+	MaxAge           time.Duration `json:"max_age,omitempty"`
+	AllowCredentials bool          `json:"allow_credentials,omitempty"`
+}
+
+type HashPolicy struct {
+	Header               string `json:"header,omitempty"`
+	Cookie               string `json:"cookie,omitempty"`
+	ConnectionProperties string `json:"connection_properties,omitempty"`
 }
 
 func DecodeRouteExtensions(generic *types.Struct) (RouteExtensionSpec, error) {
